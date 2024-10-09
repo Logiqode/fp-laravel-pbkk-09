@@ -9,9 +9,9 @@
 Membuat sebuah website e-commerce dengan register/login account.
 
 ### Human Actors
-- Customer
+- Customer:<br>
 Customer dapat menggunakan aplikasi layaknya sebuah customer e-commerce umumnya, dan juga dapat membuka tokonya sendiri yang dapat di verify oleh admin. Customer dapat menambahkan produk pada wishlist.
-- Pemilik Toko
+- Pemilik Toko:<br>
 User yang memiliki toko akan perlu melakukan verifikasi untuk pemesanan yang dilakukan oleh customer lain, dan akan ada bagian notifikasi untuk melihat daftar pembelian, status pembelian, status pembukaan toko, pemesanan pada toko, dan verifikasi pemesanan user pada toko. Pemilik toko dapat menambahkan listing jualannya pada toko dengan sebuah form. 
-- Admin
+- Admin:<br>
 Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
