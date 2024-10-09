@@ -1,7 +1,7 @@
 # Final Project ETS | Laravel | Kelompok 9
 ## Anggota Kelompok
-| Name           | NRP        | Kelas     |
-| ---            | ---        | ----------|
+| Name           | NRP        |
+| ---            | ---        |
 | Jeremy James | 5025221139 |
 | Ranto Bastara Hamonangan Sitorus | 5025221228 |
 
