@@ -24,6 +24,7 @@ class ListingFactory extends Factory
             'slug' => Str::slug(fake()->sentence(4)),
             'price' => fake()->randomFloat(2, 1, 100),
             'category' => fake()->randomElement(['Electronics', 'Food', 'Beverages', 'Toys', 'Fashion', 'Health & Beauty', 'Motors', 'Collectibles & Art', 'Sporting Goods', 'Others', 'Furniture']),
+            'status' => fake()->randomElement(['Unlisted', 'Available', 'Out of Stock']),
             'storeowner_id' => Storeowner::factory(),
         ];
     }

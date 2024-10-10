@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('category');
             $table->string('slug')->unique();
+            $table->string('status');
             $table->foreignId('storeowner_id')->constrained(
                 table: 'storeowners',
                 indexName: 'listings_storeowner_id'

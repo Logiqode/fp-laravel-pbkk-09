@@ -22,7 +22,7 @@ class StoreownerFactory extends Factory
             'store_name' => fake()->company(),
             'store_description' => fake()->realText(),
             'store_slug' => Str::slug(fake()->sentence(4)),
-            'status' => fake()->randomElement(['Pending', 'Verified', 'Closed', 'Suspended']),
+            'status' => fake()->randomElement(['Pending', 'Verified', 'Suspended']),
             'user_id' => User::factory(),
         ];
     }
