@@ -74,12 +74,17 @@
                                         </button>
                                     </form>
                                 </a>
+                                @can('admin')
+                                    <a href="/admin" class="flex px-4 py-2 text-green-600 hover:bg-gray-200 border-t-2">Admin</a>
+                                @endcan
                             </div>
                         </div>
                     </div>
 
                 @else
-                    <x-nav-link href="/login" :active="request()->is('login') || request()->is('register')">Login</x-nav-link>
+                    <div class="hidden md:flex flex">
+                        <x-nav-link href="/login" :active="request()->is('login') || request()->is('register')">Login</x-nav-link>
+                    </div>
                 @endauth
 
                 <!-- Mobile Menu Button -->
@@ -130,15 +135,30 @@
                 <span class="sr-only">Store</span>
                 <svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12c.263 0 .524-.06.767-.175a2 2 0 0 0 .65-.491c.186-.21.333-.46.433-.734.1-.274.15-.568.15-.864a2.4 2.4 0 0 0 .586 1.591c.375.422.884.659 1.414.659.53 0 1.04-.237 1.414-.659A2.4 2.4 0 0 0 12 9.736a2.4 2.4 0 0 0 .586 1.591c.375.422.884.659 1.414.659.53 0 1.04-.237 1.414-.659A2.4 2.4 0 0 0 16 9.736c0 .295.052.588.152.861s.248.521.434.73a2 2 0 0 0 .649.488 1.809 1.809 0 0 0 1.53 0 2.03 2.03 0 0 0 .65-.488c.185-.209.332-.457.433-.73.1-.273.152-.566.152-.861 0-.974-1.108-3.85-1.618-5.121A.983.983 0 0 0 17.466 4H6.456a.986.986 0 0 0-.93.645C5.045 5.962 4 8.905 4 9.736c.023.59.241 1.148.611 1.567.37.418.865.667 1.389.697Zm0 0c.328 0 .651-.091.94-.266A2.1 2.1 0 0 0 7.66 11h.681a2.1 2.1 0 0 0 .718.734c.29.175.613.266.942.266.328 0 .651-.091.94-.266.29-.174.537-.427.719-.734h.681a2.1 2.1 0 0 0 .719.734c.289.175.612.266.94.266.329 0 .652-.091.942-.266.29-.174.536-.427.718-.734h.681c.183.307.43.56.719.734.29.174.613.266.941.266a1.819 1.819 0 0 0 1.06-.351M6 12a1.766 1.766 0 0 1-1.163-.476M5 12v7a1 1 0 0 0 1 1h2v-5h3v5h7a1 1 0 0 0 1-1v-7m-5 3v2h2v-2h-2Z"/>
-                </svg>
-                
+                </svg>    
             </x-nav-link>
         </div>
 
         <!-- Other Dropdown Items -->
         <x-nav-link href="/profile" :active="request()->is('profile')">Your Profile</x-nav-link>
         <x-nav-link href="/settings" :active="request()->is('settings')">Settings</x-nav-link>
-        <a href="/" class="block px-4 py-2 font-medium text-center text-red-500 hover:text-orange-400">Log Out</a>
+        {{-- <a href="/" class="flex font-medium text-center">Log Out</a> --}}
+        <a class="flex font-medium justify-center px-4 py-2 text-red-500 hover:text-orange-400">
+            <form action="/logout" method="POST">
+                @csrf
+                <button type="submit" class="flex font-medium text-center">
+                    <svg class="w-6 h-6 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"/>
+                    </svg>
+                    Logout
+                </button>
+            </form>
+        </a>
+        @can('admin')
+        <div class="border-t-2">
+            <x-nav-link href="/admin" class="text-green-500 flex flex-col items-center justify-center rounded-md font-medium px-4 py-2 hover:text-green-700">Admin</x-nav-link>
+        </div>
+        @endcan
     @else
         <x-nav-link href="/login" :active="request()->is('login')">Login</x-nav-link>
     @endauth

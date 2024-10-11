@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Models\Listing;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Middleware\IsAdmin;
 
 Route::get('/', function () {
     return view('dashboard', ['title' => 'Dashboard']);
@@ -53,3 +55,5 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'create']);
 
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
+
+Route::get('/admin', [AdminController::class, 'index'])->middleware('admin');
