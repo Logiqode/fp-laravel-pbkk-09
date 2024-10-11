@@ -3,6 +3,8 @@
 use App\Models\Listing;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
 Route::get('/', function () {
     return view('dashboard', ['title' => 'Dashboard']);
@@ -39,3 +41,8 @@ Route::get('/profile', function () {
 Route::get('/settings', function () {
     return view('settings', ['title' => 'Settings']);
 });
+
+Route::get('/login', [LoginController::class, 'index']);
+
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'create']);
