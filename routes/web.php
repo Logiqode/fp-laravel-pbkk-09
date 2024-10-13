@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Models\Listing;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\IsAdmin;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ListingController;
+use App\Http\Controllers\RegisterController;
 
 Route::get('/', function () {
     return view('dashboard', ['title' => 'Dashboard']);
@@ -15,9 +17,7 @@ Route::get('/dashboard', function () {
     return redirect('/');
 });
 
-Route::get('/listings', function () {
-    return view('listings', ['title' => 'Listings', 'listings' => Listing::all()]);
-});
+Route::get('/listings', [ListingController::class, 'index']);
 
 Route::get('/listings/{listing:slug}', function (Listing $listing) {
     return view('listing', ['title' => 'Listing', 'listing' => $listing]);
@@ -57,3 +57,11 @@ Route::post('/register', [RegisterController::class, 'create']);
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 Route::get('/admin', [AdminController::class, 'index'])->middleware('admin');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart/{productId}/add', [CartController::class, 'add']);
+    Route::delete('/cart/{productId}/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/{productId}/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/clear', [CartController::class, 'clear']);
+});
