@@ -20,9 +20,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/listings', [ListingController::class, 'index']);
 
-Route::get('/listings/{listing:slug}', function (Listing $listing) {
-    return view('listing', ['title' => 'Listing', 'listing' => $listing]);
-});
+Route::get('/listings/{listing:slug}', [ListingController::class, 'show']);
 
 Route::get('/cart', function () {
     return view('cart', ['title' => 'Shopping Cart']);
