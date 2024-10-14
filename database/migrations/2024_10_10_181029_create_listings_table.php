@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('price');
-            $table->string('category');
+            $table->foreignId('category_id')->constrained(
+                table: 'categories',
+                indexName: 'listings_category_id'
+            );
             $table->string('slug')->unique();
             $table->string('status');
             $table->foreignId('storeowner_id')->constrained(

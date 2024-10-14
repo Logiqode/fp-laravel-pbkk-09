@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -23,14 +24,23 @@ class CartController extends Controller
                 'quantity' => $request->input('quantity', 1),
             ]);
         }
+
+        Session::flash('cartAddSuccess', 'Item successfully added to cart.');
+
         return redirect()->back()->with('success', 'Item added to cart.');
     }
 
     public function index()
     {
+        $cartItems = Cart::with('listing')->where('user_id', Auth::id())->get();
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->listing->price * $item->quantity;
+        });
+
         return view('cart', [
             'title' => 'Cart',
-            'cartItems' => Cart::where('user_id', Auth::id())->get()
+            'cartItems' => $cartItems,
+            'totalPrice' => $totalPrice
         ]);
     }
 

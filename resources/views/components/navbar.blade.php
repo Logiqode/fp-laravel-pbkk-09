@@ -8,8 +8,11 @@
             </div>
             <div class="flex items-center">
                 <!-- Search and Icons for larger screens -->
-                <div class="relative hidden md:block px-4">
-                    <input type="text" class="block w-full md:pr-10 lg:pr-24 pl-4 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm lg:text-base" placeholder="Search Products">
+                <div class="relative hidden md:block px-4">               
+                    <form action="/listings">
+                        @csrf                 
+                        <input type="search" id="search" name="search" class="block w-full md:mr-10 lg:mr-24 pl-4 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 text-sm lg:text-base" placeholder="Search Products">
+                    </form>
                 </div>
 
                 @auth
