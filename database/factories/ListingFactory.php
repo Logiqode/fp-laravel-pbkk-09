@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Storeowner;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,8 +24,9 @@ class ListingFactory extends Factory
             'description' => fake()->realText(),
             'slug' => Str::slug(fake()->sentence(4)),
             'price' => fake()->randomFloat(2, 1, 100),
-            'category' => fake()->randomElement(['Electronics', 'Food', 'Beverages', 'Toys', 'Fashion', 'Health & Beauty', 'Motors', 'Collectibles & Art', 'Sporting Goods', 'Others', 'Furniture']),
+            // 'category' => fake()->randomElement(['Electronics', 'Food', 'Toys', 'Fashion', 'Health & Beauty', 'Vehicles', 'Collectibles & Art', 'Sporting Goods', 'Others', 'Furniture', 'Fresh Produce', 'Services', 'Digital Goods']),
             'status' => fake()->randomElement(['Unlisted', 'Available', 'Out of Stock']),
+            'category_id' => Category::factory(),
             'storeowner_id' => Storeowner::factory(),
         ];
     }

@@ -4,6 +4,7 @@ export default {
     "./resources/**/*.js",
     "./resources/**/*.vue",
     "./node_modules/flowbite/**/*.js",
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
   ],
   theme: {
     extend: {
@@ -49,4 +50,5 @@ export default {
     },
   },
   plugins: [require('flowbite/plugin')],
+  safelist: ["bg-amber-500", "bg-green-200", "bg-teal-200", "bg-indigo-200", "bg-rose-300", "bg-slate-400", "bg-orange-400", "bg-emerald-500", "bg-orange-200", "bg-emerald-200", "bg-sky-200", "bg-cyan-400", "bg-red-400"],
 }
