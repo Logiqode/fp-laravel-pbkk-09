@@ -11,9 +11,9 @@ class WishlistController extends Controller
     public function index()
     {
         $wishlistItems = Wishlist::with('listing')->where('user_id', Auth::id())->get();
-        foreach ($wishlistItems as $item) {
-            dump($item->listing->category->color);
-        }
+        // foreach ($wishlistItems as $item) {
+        //     dump($item->listing->category->color);
+        // }
         return view('wishlist', [
             'title' => 'Wishlist',
             'wishlistItems' => $wishlistItems

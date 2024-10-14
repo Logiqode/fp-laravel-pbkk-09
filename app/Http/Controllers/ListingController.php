@@ -55,7 +55,7 @@ class ListingController extends Controller
         // Set path untuk pagination
         $paginatedListings->setPath('/listings');
 
-        dump($paginatedListings);
+        // dump($paginatedListings);
 
         return view('listings', [
             'title' => 'Listings',
