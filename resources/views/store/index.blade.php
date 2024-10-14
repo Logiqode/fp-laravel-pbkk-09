@@ -18,6 +18,6 @@
         </div>
     @endif
     @if ($storeOwner->status == 'Pending')
-        <h1>Thank you for creating a store. Your store application is currently under review of an Admin. We'll send you a notification once your store is Verified</h1>
+        <h1>Thank you for requesting a store. Your store application is currently under review of an Admin. We'll send you a notification once your store is Verified</h1>
     @endif
 </x-layout>

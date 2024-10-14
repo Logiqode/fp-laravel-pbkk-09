@@ -32,4 +32,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(Listing::class, 'wishlists', 'user_id', 'listing_id');
+    }
+
+    public function storeowner()
+    {
+        return $this->hasOne(Storeowner::class);
+    }
 }

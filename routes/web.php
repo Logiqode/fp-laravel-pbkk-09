@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Listing;
 use Illuminate\Support\Arr;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -36,9 +35,12 @@ Route::get('/wishlist', function () {
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/store', [StoreController::class, 'index'])->name('store.index');
+    Route::get('/store', [StoreController::class, 'index'])->name('store.show');
     Route::get('/store/create', [StoreController::class, 'create'])->name('store.create');
     Route::post('/store', [StoreController::class, 'store'])->name('store.store');
+
+    Route::get('/store/add', [StoreController::class, 'add'])->name('store.add');
+    Route::post('/store/storeListing', [StoreController::class, 'storeListing'])->name('store.storeListing');
 
     Route::get('/store/{slug}', [StoreController::class, 'show'])->name('store.show');
 });
@@ -53,6 +55,9 @@ Route::get('/settings', function () {
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::get('/login/forgot-password', [LoginController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('/login/forgot-password', [LoginController::class, 'updatePassword'])->name('password.update');
 
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');

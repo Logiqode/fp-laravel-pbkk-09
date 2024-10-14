@@ -104,7 +104,7 @@
                     <div
                         class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                         <div class="h-56 w-full">
-                            <a href="#">
+                            <a href="/listings/{{ $listing->slug }}">
                                 <img class="mx-auto h-full dark:hidden"
                                     src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
                                     alt="" />
@@ -172,8 +172,9 @@
 
                             </div>
 
-                            <a href="/listings/{{ $listing->slug }}"
-                                class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ Str::limit($listing->name, 64) }}</a>
+                            <a href="/listings/{{ $listing->slug }}" class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ Str::limit($listing->name, 64) }}</a>
+                            <br>
+                            <a href="/store/{{ $listing->storeowner->store_slug }}" class="hover:underline">{{ $listing->storeowner->store_name }}</a>
 
                             <div class="mt-4 flex items-center justify-between gap-4">
                                 <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">

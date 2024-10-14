@@ -21,7 +21,7 @@ return new class extends Migration
                 indexName: 'listings_category_id'
             );
             $table->string('slug')->unique();
-            $table->string('status');
+            $table->string('status')->default('Available');
             $table->foreignId('storeowner_id')->constrained(
                 table: 'storeowners',
                 indexName: 'listings_storeowner_id'
@@ -36,5 +36,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('listings');
+        Schema::table('listings', function (Blueprint $table) {
+            $table->string('status')->change();
+        });
     }
 };

@@ -39,6 +39,7 @@
                 <div class="mt-6 sm:mt-8 lg:mt-0">
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">{{ $listing->name }}
                     </h1>
+                    <a href="/store/{{ $listing->storeowner->store_slug }}" class="hover:underline">{{ $listing->storeowner->store_name }}</a>
                     <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
                         <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
                             ${{ $listing->price }}</p>
