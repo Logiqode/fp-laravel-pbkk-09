@@ -10,6 +10,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\WishlistController;
 
 Route::get('/', function () {
     return view('dashboard', ['title' => 'Dashboard']);
@@ -20,9 +21,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/listings', [ListingController::class, 'index']);
 
-Route::get('/listings/{listing:slug}', function (Listing $listing) {
-    return view('listing', ['title' => 'Listing', 'listing' => $listing]);
-});
+Route::get('/listings/{listing:slug}', [ListingController::class, 'show']);
 
 Route::get('/cart', function () {
     return view('cart', ['title' => 'Shopping Cart']);
@@ -76,4 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cart/{productId}/remove', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/{productId}/update', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/clear', [CartController::class, 'clear']);
+
+    Route::get('/wishlist', [WishlistController::class, 'index']);
+    Route::post('/wishlist/{productId}/add', [WishlistController::class, 'add']);
+    Route::delete('/wishlist/{productId}/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 });
