@@ -20,6 +20,8 @@ class Listing extends Model{
         'storeowner_id',
     ];
 
+    protected $with = ['category', 'storeowner'];
+
     public function category(){
         return $this->belongsTo(Category::class);
     }
