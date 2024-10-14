@@ -29,6 +29,8 @@ class ListingController extends Controller
             });
         }
 
+        $query->where('status', 'Available');
+
         $listings = $query->paginate(28);
 
         return view('listings', [

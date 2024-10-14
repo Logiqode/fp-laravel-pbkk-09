@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('storeowner_id')->constrained(
                 table: 'storeowners',
                 indexName: 'listings_storeowner_id'
-            );
+            )->onDelete('cascade');
             $table->timestamps();
         });
     }
