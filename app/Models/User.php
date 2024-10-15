@@ -18,7 +18,7 @@ class User extends Authenticatable
     //     'password',
     // ];
 
-    protected $guarded = ['id', 'created_at', 'updated_at', 'email_verified_at', 'remember_token', 'is_admin', 'is_storeowner'];
+    protected $guarded = ['id', 'created_at', 'updated_at', 'email_verified_at', 'remember_token', 'is_admin'];
 
     protected $hidden = [
         'password',
@@ -30,6 +30,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birthday' => 'date',
         ];
     }
 

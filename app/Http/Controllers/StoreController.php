@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\User;
 use App\Models\Listing;
+use App\Models\Category;
 use App\Models\Storeowner;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -33,22 +34,32 @@ class StoreController extends Controller
     return view('store.create', ['title' => 'Request Store', 'active' => 'storeListing']);
     }
 
-    public function store(Request $request){
-        $validatedData = $request->validate([
+    public function store(Request $request)
+    {
+    $validatedData = $request->validate([
         'store_name' => 'required|string|max:255|min:5|unique:storeowners',
         'store_description' => 'required|string|max:1000|min:10',
     ]);
-    
+
     $validatedData['store_slug'] = Str::slug($validatedData['store_name']);
     $validatedData['status'] = 'Pending';
     $validatedData['user_id'] = Auth::id(); 
 
-    Storeowner::create($validatedData);
+    // Create the store owner
+    $storeOwner = Storeowner::create($validatedData);
+
+    // Update the user's is_storeowner status
+    $user = User::find(Auth::id());
+    if ($user) {
+        $user->is_storeowner = 1;
+        $user->save(); // This should work now
+    };
 
     Session::flash('createStoreSuccess', 'Store creation request sent! Please wait for approval.');
 
     return redirect()->route('store.show', $validatedData['store_slug']);
-    }  
+    }
+
 
     public function show($slug)
     {

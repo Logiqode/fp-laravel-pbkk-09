@@ -22,4 +22,9 @@ class Storeowner extends Model{
     public function listings(): HasMany{
         return $this->hasMany(Listing::class, 'storeowner_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

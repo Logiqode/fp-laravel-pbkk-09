@@ -36,9 +36,17 @@ class AdminController extends Controller
 
     public function removeStore($id)
     {
-        Storeowner::findOrFail($id)->delete();
+    $store = Storeowner::findOrFail($id);
+    $user = $store->user;
 
-        return redirect()->back()->with('success', 'Store has been removed.');
+    // Update the is_storeowner attribute
+    $user->is_storeowner = 0;
+    $user->save();
+
+    // Delete the store
+    $store->delete();
+
+    return redirect()->back()->with('success', 'Store has been removed.');
     }
 }
 

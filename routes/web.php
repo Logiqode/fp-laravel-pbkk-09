@@ -2,14 +2,17 @@
 
 use Illuminate\Support\Arr;
 use App\Http\Middleware\IsAdmin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WishlistController;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
     return view('dashboard', ['title' => 'Dashboard']);
@@ -45,9 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/store/{slug}', [StoreController::class, 'show'])->name('store.show');
 });
 
-Route::get('/profile', function () {
-    return view('profile', ['title' => 'Your Profile']);
-})->middleware('auth');
+Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth');
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 
 Route::get('/settings', function () {
     return view('settings', ['title' => 'Settings']);

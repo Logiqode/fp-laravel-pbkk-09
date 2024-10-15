@@ -20,6 +20,10 @@ return new class extends Migration
             $table->boolean('is_storeowner')->default(false);
             $table->boolean('is_admin')->default(false);
             $table->string('password');
+            $table->string('address')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('phone')->nullable();
+            $table->char('gender', 1)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

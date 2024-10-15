@@ -32,7 +32,7 @@ class StoreownerSeeder extends Seeder
     ]);
 
     // Create 30 more store owners using existing users
-    $existingStoreowners = User::where('is_storeowner', 1)->take(30)->get();
+    $existingStoreowners = User::where('is_storeowner', 1)->whereNotIn('id', [1, 2, 3])->take(30)->get();
 
     foreach ($existingStoreowners as $user) {
         Storeowner::create([
