@@ -15,3 +15,27 @@ Customer dapat menggunakan aplikasi layaknya sebuah customer e-commerce umumnya,
 User yang memiliki toko akan perlu melakukan verifikasi untuk pemesanan yang dilakukan oleh customer lain, dan akan ada bagian notifikasi untuk melihat daftar pembelian, status pembelian, status pembukaan toko, pemesanan pada toko, dan verifikasi pemesanan user pada toko. Pemilik toko dapat menambahkan listing jualannya pada toko dengan sebuah form. 
 - Admin:<br>
 Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
+
+## Features per Human Actor
+- Guest:
+ - Login, Register, Forgot Password
+ - View Listings <br>
+- Customer:
+ - Everything that a Guest can do
+ - Shopping Cart
+ - Wishlist
+ - Request a Store
+ - Edit Profile <br>
+- Storeowner:
+ - Everything that a Customer can do
+ - Add Listing
+ - Modify Listing
+ - Change Listing Status to 'Available', 'Unlisted', or 'Out of Stock'<br>
+- Admin:
+ - Everything that a Customer can do
+ - Verify Store Creation Requests
+ - Suspend Stores (Suspended Stores will not be accessable by Customers)
+ - Remove Stores
+
+
+Link Demo : https://youtu.be/jO8gH0EDIC0
