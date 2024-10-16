@@ -180,110 +180,221 @@
                     @if ($item->is_in_wishlist)
                         @php $is_wishlist = true; @endphp
                     @endif
+                    @if (($item->status == 'Available' || $item->status == 'Out of Stock') && $item->storeowner->user_id != Auth::id())
+                        <div class="relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                            id="lists">
+                            <div class="h-56 w-full">
+                                <a href="/listings/{{ $item->slug }}">
+                                    <img class="mx-auto h-full dark:hidden"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
+                                        alt="" />
+                                    <img class="mx-auto hidden h-full dark:block"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
+                                        alt="" />
+                                </a>
+                            </div>
+                            <div class="pt-6">
+                                <div class="mb-4 flex items-center justify-between gap-4">
+                                    <span
+                                        class="me-2 rounded {{ $item->category->color }} px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">{{ $item->category->name }}</span>
 
-                    <div class="relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                        id="lists">
-                        <div class="h-56 w-full">
-                            <a href="/listings/{{ $item->slug }}">
-                                <img class="mx-auto h-full dark:hidden"
-                                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
-                                    alt="" />
-                                <img class="mx-auto hidden h-full dark:block"
-                                    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                    alt="" />
-                            </a>
-                        </div>
-                        <div class="pt-6">
-                            <div class="mb-4 flex items-center justify-between gap-4">
-                                <span
-                                    class="me-2 rounded {{ $item->category->color }} px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">{{ $item->category->name }}</span>
+                                    <div class="flex items-center justify-end gap-1">
+                                        @if (Auth::id() == $item->storeowner->user_id)
+                                            <form action="/store/add" method="GET">
+                                                <input type="hidden" name="listing_id" value="{{ $item->id }}">
+                                                <button type="submit"
+                                                    class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Edit</span>
+                                                    <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        width="24" height="24" fill="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path fill-rule="evenodd"
+                                                            d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
 
-                                <div class="flex items-center justify-end gap-1">
-                                    @if (Auth::id() == $item->storeowner->user_id)
-                                        <form action="/store/add" method="GET">
-                                            <input type="hidden" name="listing_id" value="{{ $item->id }}">
-                                            <button type="submit"
-                                                class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                <span class="sr-only">Edit</span>
-                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
+                                                </button>
+                                            </form>
+                                        @endif
+                                        @if ($item->is_in_wishlist)
+                                            <form action="{{ route('wishlist.remove', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Remove From Wishlist</span>
+                                                    <svg class="h-5 w-5 text-red-500" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form action="/wishlist/{{ $item->id }}/add" method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Add to Wishlist</span>
+                                                    <svg class="h-5 w-5 text-gray-500" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
 
-                                            </button>
-                                        </form>
-                                    @endif
-                                    @if ($item->is_in_wishlist)
-                                        <form action="{{ route('wishlist.remove', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                <span class="sr-only">Remove From Wishlist</span>
-                                                <svg class="h-5 w-5 text-red-500" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="2"
-                                                        d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
-                                                </svg>
-                                            </button>
-                                        </form>
-                                    @else
-                                        <form action="/wishlist/{{ $item->id }}/add" method="POST">
-                                            @csrf
-                                            <button type="submit"
-                                                class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                <span class="sr-only">Add to Wishlist</span>
-                                                <svg class="h-5 w-5 text-gray-500" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="2"
-                                                        d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
-                                                </svg>
-                                            </button>
-                                        </form>
-                                    @endif
+                                <a href="/listings/{{ $item->slug }}"
+                                    class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ Str::limit($item->name, 60) }}</a>
+                                <br>
+                                <a href="/store/{{ $item->storeowner->store_slug }}"
+                                    class="hover:underline">{{ $item->storeowner->store_name }}</a>
+
+                                <div class="mt-4 flex items-center justify-between gap-4">
+                                    <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
+                                        ${{ $item->price }}</p>
+
+                                    <form action="/cart/{{ $item->id }}/add" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit"
+                                            class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                            <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                                            </svg>
+                                            Add to cart
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-
-                            <a href="/listings/{{ $item->slug }}"
-                                class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ Str::limit($item->name, 60) }}</a>
-                            <br>
-                            <a href="/store/{{ $item->storeowner->store_slug }}"
-                                class="hover:underline">{{ $item->storeowner->store_name }}</a>
-
-                            <div class="mt-4 flex items-center justify-between gap-4">
-                                <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
-                                    ${{ $item->price }}</p>
-
-                                <form action="/cart/{{ $item->id }}/add" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit"
-                                        class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                        <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2"
-                                                d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-                                        </svg>
-                                        Add to cart
-                                    </button>
-                                </form>
-                            </div>
+                            @if ($item->storeowner->user_id != auth()->id() && $item->status == 'Out of Stock')
+                                <span
+                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-bold opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    Out of Stock
+                                </span>
+                            @endif
                         </div>
-                        @if ($item->storeowner->user_id != auth()->id() && $item->status == 'Out of Stock')
-                            <span
-                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-bold opacity-0 hover:opacity-100 transition-opacity duration-300">
-                                Out of Stock
-                            </span>
-                        @endif
-                    </div>
+                    @else
+                        <div class="relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                            id="lists">
+                            <div class="h-56 w-full">
+                                <a href="/listings/{{ $item->slug }}">
+                                    <img class="mx-auto h-full dark:hidden"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
+                                        alt="" />
+                                    <img class="mx-auto hidden h-full dark:block"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
+                                        alt="" />
+                                </a>
+                            </div>
+                            <div class="pt-6">
+                                <div class="mb-4 flex items-center justify-between gap-4">
+                                    <div class="mb-4 flex flex-col items-start justify-between gap-1">
+                                        <span
+                                            class="me-2 rounded {{ $item->category->color }} px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">{{ $item->category->name }}</span>
+                                        <span
+                                            class="me-2 rounded bg-gray-200 px-2.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">{{ $item->status }}</span>
+                                    </div>
+
+                                    <div class="flex items-center justify-end gap-1">
+                                        @if (Auth::id() == $item->storeowner->user_id)
+                                            <form action="/store/add" method="GET">
+                                                <input type="hidden" name="listing_id" value="{{ $item->id }}">
+                                                <button type="submit"
+                                                    class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Edit</span>
+                                                    <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        width="24" height="24" fill="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path fill-rule="evenodd"
+                                                            d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+
+                                                </button>
+                                            </form>
+                                        @endif
+                                        @if ($item->is_in_wishlist)
+                                            <form action="{{ route('wishlist.remove', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Remove From Wishlist</span>
+                                                    <svg class="h-5 w-5 text-red-500" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form action="/wishlist/{{ $item->id }}/add" method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <span class="sr-only">Add to Wishlist</span>
+                                                    <svg class="h-5 w-5 text-gray-500" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <a href="/listings/{{ $item->slug }}"
+                                    class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ Str::limit($item->name, 60) }}</a>
+                                <br>
+                                <a href="/store/{{ $item->storeowner->store_slug }}"
+                                    class="hover:underline">{{ $item->storeowner->store_name }}</a>
+
+                                <div class="mt-4 flex items-center justify-between gap-4">
+                                    <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
+                                        ${{ $item->price }}</p>
+
+                                    <form action="/cart/{{ $item->id }}/add" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit"
+                                            class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                            <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                                            </svg>
+                                            Add to cart
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            @if ($item->storeowner->user_id != auth()->id() && $item->status == 'Out of Stock')
+                                <span
+                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-bold opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    Out of Stock
+                                </span>
+                            @endif
+                        </div>
+                    @endif
                 @endforeach
             </div>
         </section>
