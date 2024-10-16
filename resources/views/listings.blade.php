@@ -2,11 +2,16 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <section class="py-4 antialiased dark:bg-gray-900 md:py-6">
-        @if(session()->has('cartAddSuccess'))
-            <div id="toast-success" class="flex items-center w-full p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
-                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+        @if (session()->has('cartAddSuccess'))
+            <div id="toast-success"
+                class="flex items-center w-full p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+                role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
                     </svg>
                     <span class="sr-only">Check icon</span>
                 </div>
@@ -148,7 +153,8 @@
                                             @csrf
                                             <button type="submit"
                                                 data-tooltip-target="tooltip-add-to-favorites-{{ $listing->id }}"
-                                                class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                                @if ($listing->storeowner->user_id == auth()->id()) disabled @endif>
                                                 <span
                                                     class="sr-only">{{ $listing->is_in_wishlist ? 'Remove From Wishlist' : 'Add to Wishlist' }}</span>
                                                 <svg class="h-5 w-5 {{ $listing->is_in_wishlist ? 'text-red-500' : 'text-gray-500' }}"
@@ -172,9 +178,11 @@
 
                             </div>
 
-                            <a href="/listings/{{ $listing->slug }}" class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ Str::limit($listing->name, 64) }}</a>
+                            <a href="/listings/{{ $listing->slug }}"
+                                class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ Str::limit($listing->name, 64) }}</a>
                             <br>
-                            <a href="/store/{{ $listing->storeowner->store_slug }}" class="hover:underline">{{ $listing->storeowner->store_name }}</a>
+                            <a href="/store/{{ $listing->storeowner->store_slug }}"
+                                class="hover:underline">{{ $listing->storeowner->store_name }}</a>
 
                             <div class="mt-4 flex items-center justify-between gap-4">
                                 <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
@@ -182,7 +190,7 @@
 
                                 <form action="/cart/{{ $listing->id }}/add" method="POST" class="inline">
                                     @csrf
-                                    <button type="submit"
+                                    <button type="submit" @if ($listing->storeowner->user_id == auth()->id()) disabled @endif
                                         class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                         <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24"

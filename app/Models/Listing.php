@@ -20,6 +20,7 @@ class Listing extends Model
         'price',
         'category_id',
         'storeowner_id',
+        'status',
     ];
 
     protected $with = ['category', 'storeowner'];
