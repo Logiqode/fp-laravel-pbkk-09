@@ -180,7 +180,8 @@
                     @if ($item->is_in_wishlist)
                         @php $is_wishlist = true; @endphp
                     @endif
-                    <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+
+                    <div class="relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
                         id="lists">
                         <div class="h-56 w-full">
                             <a href="/listings/{{ $item->slug }}">
@@ -198,21 +199,23 @@
                                     class="me-2 rounded {{ $item->category->color }} px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">{{ $item->category->name }}</span>
 
                                 <div class="flex items-center justify-end gap-1">
-                                    <form action="/store/add" method="GET">
-                                        <input type="hidden" name="listing_id" value="{{ $item->id }}">
-                                        <button type="submit"
-                                            class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
-                                            <span class="sr-only">Edit</span>
-                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                fill="currentColor" viewBox="0 0 24 24">
-                                                <path fill-rule="evenodd"
-                                                    d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
+                                    @if (Auth::id() == $item->storeowner->user_id)
+                                        <form action="/store/add" method="GET">
+                                            <input type="hidden" name="listing_id" value="{{ $item->id }}">
+                                            <button type="submit"
+                                                class="rounded-lg p-2 text-red-500 hover:bg-gray-100 hover:text-gray-900 dark:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                <span class="sr-only">Edit</span>
+                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    fill="currentColor" viewBox="0 0 24 24">
+                                                    <path fill-rule="evenodd"
+                                                        d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
 
-                                        </button>
-                                    </form>
+                                            </button>
+                                        </form>
+                                    @endif
                                     @if ($item->is_in_wishlist)
                                         <form action="{{ route('wishlist.remove', $item->id) }}" method="POST">
                                             @csrf
@@ -274,6 +277,12 @@
                                 </form>
                             </div>
                         </div>
+                        @if ($item->storeowner->user_id != auth()->id() && $item->status == 'Out of Stock')
+                            <span
+                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-bold opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                Out of Stock
+                            </span>
+                        @endif
                     </div>
                 @endforeach
             </div>

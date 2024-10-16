@@ -17,9 +17,20 @@ class StoreController extends Controller
     {
         $user = $request->user();
         $storeOwner = Storeowner::where('user_id', $user->id)->first();
+        // dd($storeOwner);
 
         if ($storeOwner) {
-            $storeItems = Listing::where('storeowner_id', $storeOwner->id)->get();
+            $storeItems = Listing::where(function ($query) use ($storeOwner) {
+                // Tampilkan item yang statusnya bukan 'unlisted' untuk pengguna selain storeowner
+                if (Auth::id() != $storeOwner->user_id) {
+                    $query->where('status', '!=', 'unlisted');
+                }
+                // Untuk storeowner, tampilkan semua items
+                else {
+                    $query->where('storeowner_id', $storeOwner->id);
+                }
+            })->get();
+
             // dd($storeItems);
             return view('store.show', [
                 'storeOwner' => $storeOwner,
@@ -30,6 +41,7 @@ class StoreController extends Controller
             return view('store.nostore', ['title' => 'Create Store', 'active' => 'store']);
         }
     }
+
 
     public function create()
     {
