@@ -17,12 +17,12 @@ User yang memiliki toko akan perlu melakukan verifikasi untuk pemesanan yang dil
 Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
 
 ## Features per Human Actor
-- Guest:
+### Guest:
  - Login, Register, Forgot Password
  - View Listings <br>
 
  
-- Customer:
+### Customer:
  - Everything that a Guest can do
  - Shopping Cart
  - Wishlist
@@ -30,14 +30,14 @@ Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
  - Edit Profile <br>
 
  
-- Storeowner:
+### Storeowner:
  - Everything that a Customer can do
  - Add Listing
  - Modify Listing
  - Change Listing Status to 'Available', 'Unlisted', or 'Out of Stock'<br>
 
  
-- Admin:
+### Admin:
  - Everything that a Customer can do
  - Verify Store Creation Requests
  - Suspend Stores (Suspended Stores will not be accessable by Customers)
