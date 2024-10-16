@@ -20,17 +20,23 @@ Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
 - Guest:
  - Login, Register, Forgot Password
  - View Listings <br>
+
+ 
 - Customer:
  - Everything that a Guest can do
  - Shopping Cart
  - Wishlist
  - Request a Store
  - Edit Profile <br>
+
+ 
 - Storeowner:
  - Everything that a Customer can do
  - Add Listing
  - Modify Listing
  - Change Listing Status to 'Available', 'Unlisted', or 'Out of Stock'<br>
+
+ 
 - Admin:
  - Everything that a Customer can do
  - Verify Store Creation Requests
