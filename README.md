@@ -16,7 +16,10 @@ User yang memiliki toko akan perlu melakukan verifikasi untuk pemesanan yang dil
 - Admin:<br>
 Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
 
+# Final Report
 ## Features per Human Actor
+Sebuah Guest dapat membuat akun dengan sign up. Sebuah Customer dapat membuat toko yang akan mengubah is_storeowner pada tabel user jadi 1 atau true setelah mengisi store creation request. Ketika toko dari storeowner dihapus, maka akan menjadi 0 lagi. Admin menggunakan logika Gate di AppServiceProvider dan penambahan group 'admin' ke middleware. Admin dapat melihat data user di database, apabila is_admin adalah 1 atau true maka akan diberikan akses kepada admin panel.
+
 ### Guest:
  - Login, Register, Forgot Password
  - View Listings <br>
@@ -26,8 +29,8 @@ Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
  - Everything that a Guest can do
  - Shopping Cart
  - Wishlist
- - Request a Store
- - Edit Profile <br>
+ - Request Store Creation
+ - View and Edit Profile <br>
 
  
 ### Storeowner:
@@ -44,4 +47,15 @@ Admin ecommerce melakukan review dan verifikasi pada user yang membuka toko.
  - Remove Stores
 
 
+## UI
+Untuk UI kami mengambil dari flowbite dan sudah dibuat responsif dengan hamburger menu ketika ukuran layar lebih kecil. Sudah tersedia Pagination, Searching, dan pencarian listing dapat menggunakan search di navbar atau dari Dashboard.
+
+## Database
+Untuk data kami menggunakan faker untuk mengisi dummy data. Kami memiliki 6 tabel dengan relasi seperti gambar dibawah ini.
+![image](https://github.com/user-attachments/assets/52de3582-d31b-4247-b9fd-7d3f6c92214d)
+
+
+
 Link Demo : https://youtu.be/jO8gH0EDIC0
+
+
